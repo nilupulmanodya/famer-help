@@ -27,6 +27,7 @@ def weather_fetch(city_name):
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+    #print(city_name)
     response = requests.get(complete_url)
     x = response.json()
     #print(x["cod"])
@@ -37,6 +38,7 @@ def weather_fetch(city_name):
         humidity = y["humidity"]
         return temperature, humidity
     else:
+        print('weather API error : {}'.format(x['cod']))
         return None
 
 
@@ -89,13 +91,24 @@ def crop_prediction():
             final_prediction = my_prediction[0]
 
             #return render_template('crop-result.html', prediction=final_prediction, title=title)
-            print(data)
-            return render_template('error.html', title=title)
+            print(final_prediction)
+            return render_template('crop_prediction.html',prediction=final_prediction, title=title)
 
         else:
             return render_template('error.html', title=title)
             
     
+
+
+#fertilizer reccommend starts here
+
+@ app.route('/fertilizer')
+def crop_recommend():
+    title = 'Farmhelper - Crop Recommendation'
+    return render_template('crop.html', title=title)
+
+
+
 # ===============================================================================================
 if __name__ == '__main__':
     app.run(debug=True)

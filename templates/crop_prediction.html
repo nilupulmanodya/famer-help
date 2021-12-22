@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+       
+        <div class="col-md-9">
+          <div class="detail-box">
+            <div class="heading_container">
+
+                <h3>Great our suggestion is "{{prediction}}"</h3>
+                <br>
+                <div class="img-box">
+				
+                    <img width=200; height=200; src="{{ url_for('static', filename='''images/crops/'+prediction+'.jpg''') }}" alt="img not preview" />
+                  </div>
+<br>
+                <p>We would like to suggest <b>{{prediction}}</b> to your farm. because {{prediction}} is the most suited crop to you as our Machine Learning algorithm out of 22 crops in our database that grows in Sri Lanka.</p>
+                <p>Lets put your next step, <a target="popup"  href="https://www.google.com/search?-b-d&q=how+to+grow+{{prediction}}+in+sri+lanka">click here</a> to view detailed view of most suited crop to your farm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+
+
+
+
+{% endblock %}

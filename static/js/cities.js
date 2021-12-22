@@ -2,15 +2,15 @@ var province_arr = new Array("Central","Western","Eastern","North Central","Nort
 
 var district = new Array();
 district[0]=" ";
-district[1]="Kandy | Matale | Nuwara Eliya";
-district[2]="Colombo | Gampaha | Kalutara";
-district[3]="Ampara | Batticaloa | Trincomalee";
-district[4]="Anuradhapura |Polonnaruwa";
-district[5]="Jaffna | Kilinochchi | Mannar | Mullaitivu | Vavuniya";
-district[6]="Kurunegala | Puttalam";
-district[7]="Kegalle | Ratnapura";
-district[8]="Galle | Hambantota | Matara";
-district[9]="Badulla | Monaragala";
+district[1]="Kandy|Matale|Nuwara Eliya";
+district[2]="Colombo|Gampaha|Kalutara";
+district[3]="Ampara|Batticaloa|Trincomalee";
+district[4]="Anuradhapura|Polonnaruwa";
+district[5]="Jaffna|Kilinochchi|Mannar|Mullaitivu|Vavuniya";
+district[6]="Kurunegala|Puttalam";
+district[7]="Kegalle|Ratnapura";
+district[8]="Galle|Hambantota|Matara";
+district[9]="Badulla|Monaragala";
 
 
 function print_province(province_id){
