@@ -5,7 +5,8 @@ import requests
 import numpy as np
 import pandas as pd
 import pickle
-
+from utils.disease import disease_dic
+from utils.fertilizer import fertilizer_dic
 #==========loading trained models
 # Loading crop recommendation model
 
@@ -56,6 +57,31 @@ def home():
     return render_template('index.html', title=title)
     
 
+# render disease prediction result page
+
+
+@app.route('/disease-predict', methods=['GET', 'POST'])
+def disease_prediction():
+    title = 'Farmhelper - Disease Detection'
+
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files.get('file')
+        if not file:
+            return render_template('disease.html', title=title)
+        try:
+            img = file.read()
+
+            prediction = predict_image(img)
+
+            prediction = Markup(str(disease_dic[prediction]))
+            return render_template('disease-result.html', prediction=prediction, title=title)
+        except:
+            pass
+    return render_template('disease.html', title=title)
+
+
 
 # render crop recommendation form page
 
@@ -103,9 +129,53 @@ def crop_prediction():
 #fertilizer reccommend starts here
 
 @ app.route('/fertilizer')
-def crop_recommend():
-    title = 'Farmhelper - Crop Recommendation'
-    return render_template('crop.html', title=title)
+def fert_suggestion():
+    title = 'Farmhelper - Fertilizer Suggestion'
+    return render_template('fertilizer.html', title=title)
+
+
+
+@ app.route('/fertilizer-suggest', methods=['POST'])
+def fert_recommend():
+    title = 'Farmhelper - Fertilizer Suggestion'
+
+    crop_name = str(request.form['cropname'])
+    N = int(request.form['nitrogen'])
+    P = int(request.form['phosphorous'])
+    K = int(request.form['pottasium'])
+    # ph = float(request.form['ph'])
+
+    df = pd.read_csv('Data/fertilizer.csv')
+
+    nr = df[df['Crop'] == crop_name]['N'].iloc[0]
+    pr = df[df['Crop'] == crop_name]['P'].iloc[0]
+    kr = df[df['Crop'] == crop_name]['K'].iloc[0]
+
+    n = nr - N
+    p = pr - P
+    k = kr - K
+    temp = {abs(n): "N", abs(p): "P", abs(k): "K"}
+    max_value = temp[max(temp.keys())]
+    if max_value == "N":
+        if n < 0:
+            key = 'NHigh'
+        else:
+            key = "Nlow"
+    elif max_value == "P":
+        if p < 0:
+            key = 'PHigh'
+        else:
+            key = "Plow"
+    else:
+        if k < 0:
+            key = 'KHigh'
+        else:
+            key = "Klow"
+
+    response = Markup(str(fertilizer_dic[key]))
+
+    return render_template('fertilizer-result.html', recommendation=response, title=title)
+
 
 
 
