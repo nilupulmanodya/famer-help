@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-md-3">
           <div class="img-box">
-            <img src="images/fresh-img.png" alt="" />
+            <img src="{{ url_for('static', filename='images/fresh-img.png') }}" alt="" />
           </div>
         </div>
         <div class="col-md-9">
@@ -27,18 +27,31 @@
             <p>
               Please upload an image of leave that you confusing.. 
             </p>
-            <input type="file">
-            <div class="btn-box">
-              <button href="" class="btn-1">
-                Predict now
-              </button>
-            </div>
+              <form method="post" enctype=multipart/form-data>
+                <input type="file" name="file" id="file" onchange="preview_image(event)">
+                  <img width= 200; id="output-image" class="rounded mx-auto d-block" />
+                  <div class="btn-box">
+                    <button type="submit" class="btn-1">
+                      Predict now
+                    </button>
+                  </div>
+              </form>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <script type="text/javascript">
+    function preview_image(event) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var output = document.getElementById('output-image')
+        output.src = reader.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
   <!-- end about section -->
 
   {% endblock %}
